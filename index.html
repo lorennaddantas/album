@@ -390,6 +390,119 @@ transition:.3s;
 cursor:pointer;
 }
 
+/* BANDEJA DE FIGURINHAS */
+
+.sticker-tray{
+width:100%;
+
+background:
+linear-gradient(
+180deg,
+rgba(0,0,0,.55),
+rgba(0,0,0,.82)
+);
+
+border-top:1px solid rgba(255,255,255,.06);
+
+padding:10px 12px;
+
+flex-shrink:0;
+
+backdrop-filter:blur(10px);
+}
+
+.tray-label{
+font-family:'Bebas Neue',cursive;
+
+font-size:.82rem;
+
+letter-spacing:2px;
+
+margin-bottom:8px;
+
+color:#fff;
+}
+
+.tray-scroll{
+display:flex;
+
+gap:10px;
+
+overflow-x:auto;
+
+padding-bottom:4px;
+
+scrollbar-width:none;
+}
+
+.tray-scroll::-webkit-scrollbar{
+display:none;
+}
+
+/* MINI FIGURINHAS */
+
+.mini-s{
+width:72px;
+
+height:100px;
+
+border-radius:10px;
+
+overflow:hidden;
+
+position:relative;
+
+border:2px solid;
+
+flex-shrink:0;
+
+cursor:grab;
+
+background:#111;
+
+transition:.18s;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.4);
+}
+
+.mini-s:active{
+cursor:grabbing;
+transform:scale(.96);
+}
+
+.mini-s img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.mini-num{
+position:absolute;
+
+top:4px;
+left:4px;
+
+min-width:20px;
+height:20px;
+
+padding:0 4px;
+
+border-radius:6px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:.62rem;
+font-weight:900;
+
+color:#fff;
+
+box-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+   
 /* BOTÕES */
 
 #nav-prev,
