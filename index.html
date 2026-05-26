@@ -775,7 +775,7 @@ function renderPage(){
     const placed=Object.keys(state.placed).length;
     pg.innerHTML=`<div class="alb-cover-inner">
       <div class="alb-cover-img"><img src="image/Capa do Álbum.png" alt="Capa"/></div>
-      <div style="padding:5px 16px;border-radius:14px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.18);font-family:'Bebas Neue',cursive;font-size:.78rem;color:#FFDF00;letter-spacing:2px">${placed}/25 COLADAS</div>
+      <div class="cover-progress">${placed}/25 COLADAS</div>
     </div>`;
     body.appendChild(pg); return;
   }
