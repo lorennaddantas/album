@@ -174,7 +174,7 @@ font-size:1.15rem;
 letter-spacing:3px;
 }
 
-/* GRID DAS FIGURINHAS */
+/* GRID RESPONSIVO */
 
 .sticker-grid{
 flex:1;
@@ -182,30 +182,29 @@ flex:1;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(120px,140px));
+repeat(auto-fit,minmax(70px,1fr));
 
-justify-content:center;
+justify-items:center;
 
-gap:22px;
+gap:14px;
 
-padding:
-24px
-28px
-34px;
+padding:18px;
 
 overflow-y:auto;
 
 align-content:start;
 }
 
-/* FIGURINHA */
+/* SLOT */
 
 .slot{
-width:140px;
+width:100%;
+
+max-width:105px;
 
 aspect-ratio:5/7;
 
-border-radius:14px;
+border-radius:12px;
 
 border:2px dashed rgba(255,255,255,.14);
 
@@ -225,9 +224,7 @@ rgba(0,0,0,.18)
 );
 
 transition:.22s;
-flex-shrink:0;
 }
-
 .slot.placed{
 border-style:solid;
 }
@@ -519,94 +516,58 @@ border-radius:16px;
 
 /* RESPONSIVO */
 
+/* RESPONSIVIDADE */
+
 @media(max-width:900px){
 
 .album-page{
-width:96vw;
-height:82vh;
-}
-
-.sticker-grid{
-grid-template-columns:
-repeat(2,minmax(120px,1fr));
-
-gap:16px;
-
-padding:18px;
-}
-
-.slot{
-max-width:150px;
+width:min(94vw,430px);
+height:74vh;
 }
 
 .alb-cover-img{
-width:min(320px,82vw);
-}
-}
-
-@media(max-width:900px){
-
-.sticker-grid{
-grid-template-columns:
-repeat(2,130px);
-
-justify-content:center;
-
-gap:18px;
-}
-
-.slot{
-width:130px;
-}
-}
-
-@media(max-width:600px){
-
-.alb-body{
-padding:10px;
-}
-
-.album-page{
-width:92vw;
-height:72vh;
-border-radius:18px;
+width:min(220px,70vw);
 }
 
 .sticker-grid{
 grid-template-columns:
-repeat(2,95px);
+repeat(2,minmax(70px,1fr));
 
 gap:12px;
-padding:12px;
+padding:14px;
 }
 
 .slot{
-width:95px;
-border-radius:10px;
+max-width:92px;
 }
 
 .slot-name-lbl{
-font-size:.46rem;
-padding:5px 4px;
-}
-
-.alb-cover-img{
-width:min(210px,72vw);
-}
-
-.page-hdr{
-padding:12px;
+font-size:.48rem;
 }
 
 .page-hdr-title{
-font-size:.82rem;
+font-size:.85rem;
+}
 }
 
-#nav-prev,
-#nav-next{
-width:42px;
-height:42px;
-font-size:1rem;
+@media(max-width:500px){
+
+.album-page{
+width:96vw;
+height:72vh;
+}
+
+.slot{
+max-width:82px;
+}
+
+.sticker-grid{
+gap:10px;
+padding:10px;
+}
+
+.alb-cover-img{
+width:min(190px,68vw);
 }
 }
 </style>
