@@ -15,7 +15,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 /* HOME */
 #home{background:linear-gradient(160deg,#021033 0%,#001a08 50%,#1a1200 100%)}
 .home-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:14px 14px 70px;gap:12px}
-.cover-wrap{width:min(190px,50vw);aspect-ratio:3/4;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 12px 50px rgba(0,0,0,.7),0 0 40px rgba(255,215,0,.15);flex-shrink:0}
+.cover-wrap{width:min(320px,85vw);aspect-ratio:3/4;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 12px 50px rgba(0,0,0,.7),0 0 40px rgba(255,215,0,.15);flex-shrink:0}
 .cover-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%;max-width:400px}
 .stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:9px 5px;text-align:center}
@@ -68,11 +68,74 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 #album{background:#010d1f}
 .alb-topbar{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(0,0,0,.6);border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
 .alb-title-txt{font-family:'Bebas Neue',cursive;font-size:.84rem;letter-spacing:3px}
-.alb-body{flex:1;overflow:hidden;display:flex;flex-direction:column;padding:7px;min-height:0}
-.album-page{flex:1;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-height:0;border:1px solid rgba(255,255,255,.05)}
+.alb-body{perspective: 2000px;
+position: relative;flex:1;overflow:hidden;display:flex;flex-direction:column;padding:7px;min-height:0}
+.album-page{background-size:cover;
+box-shadow:
+0 10px 40px rgba(0,0,0,.45),
+inset 0 0 30px rgba(255,255,255,.03);transform-style: preserve-3d;
+transform-origin: left center;
+transition:
+transform .7s cubic-bezier(.4,0,.2,1),
+opacity .4s;
+backface-visibility:hidden;
+position:absolute;
+inset:0;flex:1;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-height:0;border:1px solid rgba(255,255,255,.05)}
 .page-hdr{padding:5px 10px 4px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .page-hdr-title{font-family:'Bebas Neue',cursive;font-size:.78rem;letter-spacing:2px}
-.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:5px 7px 7px;flex:1;min-height:0;align-content:center}
+.sticker-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+padding:20px;
+justify-items:center;
+align-content:start;
+overflow-y:auto;
+}gap:5px;padding:5px 7px 7px;flex:1;min-height:0;align-content:center}
+.album-page.turn-next{
+animation: pageTurnNext .7s ease forwards;
+z-index:20;
+}
+
+.album-page.turn-prev{
+animation: pageTurnPrev .7s ease forwards;
+z-index:20;
+}
+
+@keyframes pageTurnNext{
+0%{
+transform:rotateY(0deg);
+}
+100%{
+transform:rotateY(-180deg);
+opacity:.2;
+}
+}
+
+@keyframes pageTurnPrev{
+0%{
+transform:rotateY(-180deg);
+opacity:.2;
+}
+100%{
+transform:rotateY(0deg);
+opacity:1;
+}
+} 
+.album-page::after{
+content:'';
+position:absolute;
+top:0;
+right:0;
+width:40px;
+height:100%;
+background:linear-gradient(
+to left,
+rgba(0,0,0,.35),
+transparent
+);
+pointer-events:none;
+}
 .slot{border-radius:7px;border:1.5px dashed rgba(255,255,255,.12);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:5/7;transition:all .2s;min-width:0;min-height:0}
 .slot.placed{border-style:solid}
 .slot-num{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:.48rem;color:#fff;z-index:2;background:rgba(0,0,0,.7)}
@@ -209,7 +272,7 @@ const PAGES = [
   {label:'SESSÃO 5 • 21-25', ids:[21,22,23,24,25],bg:'linear-gradient(160deg,#1a0800,#010d1f)', border:'#8B3A1A'},
 ];
 
-let state = {openedPacks:[],collected:[],placed:{},lastClaim:null,pending:3};
+let state = {openedPacks:[],collected:[],placed:{},lastClaim:null,pending:1};
 function save(){ try{ localStorage.setItem('owc26d', JSON.stringify(state)); }catch(e){} }
 function load(){ try{ const r=localStorage.getItem('owc26d'); if(r) state=JSON.parse(r); }catch(e){} }
 
@@ -227,7 +290,7 @@ function getStatus(){
   if(rem<=0) return {pending:0,msLeft:0,progress:1};
   if(!state.lastClaim) return {pending:Math.max(state.pending,3),msLeft:INTERVAL_MS,progress:0};
   const el=now-state.lastClaim, batches=Math.floor(el/INTERVAL_MS);
-  const pend=Math.min(state.pending+Math.min(batches*2,rem),rem);
+  const pend=Math.min(state.pending+Math.min(batches*1,rem),rem);
   const ms=el%INTERVAL_MS;
   return {pending:pend, msLeft:INTERVAL_MS-ms, progress:ms/INTERVAL_MS};
 }
@@ -349,10 +412,42 @@ function buildDots(){
   }
 }
 
-$('nav-prev').onclick=()=>{ if(albPage>0){ albPage--; renderAlbum(); } };
-$('nav-next').onclick=()=>{ if(albPage<TOTAL_ALB-1){ albPage++; renderAlbum(); } };
-$('alb-back').onclick=()=>{ showScreen('home'); renderHome(); startTimer(); };
+$('nav-prev').onclick=()=>{
+  if(albPage>0){
+    animatePageTurn('prev');
+  }
+};
 
+$('nav-next').onclick=()=>{
+  if(albPage<TOTAL_ALB-1){
+    animatePageTurn('next');
+  }
+};
+$('alb-back').onclick=()=>{ showScreen('home'); renderHome(); startTimer(); };
+function animatePageTurn(direction){
+
+  const pg = document.querySelector('.album-page');
+
+  if(!pg) return;
+
+  pg.classList.add(
+    direction === 'next'
+      ? 'turn-next'
+      : 'turn-prev'
+  );
+
+  setTimeout(()=>{
+
+    if(direction === 'next'){
+      albPage++;
+    }else{
+      albPage--;
+    }
+
+    renderAlbum();
+
+  },650);
+}
 function renderPage(){
   const body=$('alb-body'); body.innerHTML='';
   $('nav-prev').style.opacity=albPage===0?'.3':'1'; $('nav-prev').disabled=albPage===0;
@@ -364,7 +459,6 @@ function renderPage(){
     const placed=Object.keys(state.placed).length;
     pg.innerHTML=`<div class="alb-cover-inner">
       <div class="alb-cover-img"><img src="image/Capa do Álbum.png" alt="Capa"/></div>
-      <div style="font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:4px;color:#FFDF00;text-align:center;line-height:1.2">OUR WORLD CUP<br><span style='font-size:1.5rem'>2026</span></div>
       <div style="padding:5px 16px;border-radius:14px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.18);font-family:'Bebas Neue',cursive;font-size:.78rem;color:#FFDF00;letter-spacing:2px">${placed}/25 COLADAS</div>
     </div>`;
     body.appendChild(pg); return;
@@ -372,7 +466,11 @@ function renderPage(){
   const pg=PAGES[albPage-1];
   $('alb-title').textContent=pg.label; $('alb-title').style.color=pg.border;
   const page=document.createElement('div'); page.className='album-page';
-  page.style.background=pg.bg; page.style.borderColor=pg.border+'33';
+  page.style.background = `
+linear-gradient(rgba(1,13,31,.82),rgba(1,13,31,.88)),
+url('image/Capa do Álbum.png')
+center/cover no-repeat
+`; page.style.borderColor=pg.border+'33';
   const placed_c=pg.ids.filter(id=>state.placed[id]).length;
   const hdr=document.createElement('div'); hdr.className='page-hdr';
   hdr.innerHTML=`<div class="page-hdr-title" style="color:${pg.border}">${pg.label}</div><div style="font-size:.58rem;color:rgba(255,255,255,.3);font-weight:700">${placed_c}/5 coladas</div>`;
