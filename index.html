@@ -143,15 +143,66 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 }
 .page-hdr-title{font-family:'Bebas Neue',cursive;font-size:clamp(.78rem,1.8vw,1.05rem);letter-spacing:3px}
 
-/* ── GRID 5 FIGURINHAS ── */
+/* ── GRID 3 COLUNAS LAYOUT ── */
 .sticker-grid{
   flex:1;
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:clamp(4px,1vw,12px);
-  padding:clamp(8px,2vw,20px);
-  align-content:center;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:clamp(6px,1.5vw,16px);
+  padding:clamp(10px,2vw,22px);
   min-height:0;
+  align-items:center;
+  justify-items:center;
+}
+.slot:nth-child(1){grid-column:1;grid-row:1}
+.slot:nth-child(2){grid-column:1;grid-row:2}
+.slot:nth-child(3){grid-column:2;grid-row:1/3;align-self:center;justify-self:center}
+.slot:nth-child(4){grid-column:3;grid-row:1}
+.slot:nth-child(5){grid-column:3;grid-row:2}
+
+/* todos os slots: tamanho fixo baseado na altura disponível */
+.slot{
+  width:min(100%,120px);
+  aspect-ratio:5/7;
+  max-height:min(45%,160px);
+  height:auto;
+}
+/* slot central: mesmo tamanho, só centralizado */
+.slot:nth-child(3){
+  width:min(100%,120px);
+  max-height:min(45%,160px);
+}
+
+/* MODAL */
+.sticker-modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.sticker-modal{
+  width:min(260px,70vw);
+  aspect-ratio:5/7;
+  border-radius:18px;overflow:hidden;position:relative;
+  border:3px solid;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  animation:popIn .25s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.sticker-modal img{width:100%;height:100%;object-fit:cover;display:block}
+.sticker-modal-num{
+  position:absolute;top:10px;left:10px;
+  background:rgba(0,0,0,.75);border-radius:8px;
+  font-family:'Bebas Neue',cursive;font-size:1rem;
+  padding:2px 10px;color:#fff;z-index:2;
+}
+.sticker-modal-close{
+  position:absolute;top:10px;right:10px;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:2;
 }
 
 .slot{
@@ -181,16 +232,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 
 /* CAPA do álbum */
 .alb-cover-inner{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2.5vw,22px);padding:clamp(16px,3vw,32px);
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:0;padding:0;overflow:hidden;
 }
 .alb-cover-img{
-  width:min(200px,48vw,30vh);
-  aspect-ratio:3/4;
-  border-radius:14px;overflow:hidden;
-  border:2px solid rgba(255,215,0,.25);
-  box-shadow:0 14px 50px rgba(0,0,0,.65),0 0 24px rgba(255,215,0,.1);
+  width:100%;height:100%;
+  border-radius:0;overflow:hidden;
+  border:none;box-shadow:none;
 }
-.alb-cover-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.alb-cover-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;background:#000}
 .cover-progress{
   padding:8px 20px;border-radius:999px;
   background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.18);
@@ -547,6 +596,8 @@ function renderPage(){
       <div class="book-spine"></div>
       <div class="alb-cover-inner">
         <div class="alb-cover-img"><img src="image/Capa do Álbum.png" alt="Capa"/></div>
+      </div>
+      <div style="padding:10px 16px;text-align:center;flex-shrink:0;border-top:1px solid rgba(255,255,255,.05)">
         <div class="cover-progress">${placed}/25 COLADAS</div>
       </div>`;
     body.appendChild(pg); return;
@@ -570,6 +621,19 @@ function renderPage(){
   body.appendChild(page);
 }
 
+function openModal(id){
+  const s=sById(id);
+  const bg=document.createElement('div'); bg.className='sticker-modal-bg';
+  const card=document.createElement('div'); card.className='sticker-modal'; card.style.borderColor=s.color;
+  card.innerHTML=`
+    <div class="sticker-modal-num">#${id}</div>
+    <img src="${imgUrl(s)}" alt="${s.name}"/>
+    <div class="sticker-modal-close">✕</div>`;
+  bg.appendChild(card);
+  bg.addEventListener('click',e=>{ if(e.target===bg||e.target.classList.contains('sticker-modal-close')) bg.remove(); });
+  document.body.appendChild(bg);
+}
+
 function makeSlot(id){
   const s=sById(id), isP=!!state.placed[id];
   const slot=document.createElement('div');
@@ -581,7 +645,8 @@ function makeSlot(id){
   num.style.background=isP?s.color:'rgba(0,0,0,.75)'; num.textContent=id; slot.appendChild(num);
   if(isP){
     const im=document.createElement('img'); im.src=imgUrl(s); im.alt=s.name; slot.appendChild(im);
-    // sem legenda de nome — removida conforme solicitado
+    slot.style.cursor='pointer';
+    slot.addEventListener('click',()=>openModal(id));
   } else {
     const e=document.createElement('div'); e.className='slot-empty-txt'; e.textContent=id; slot.appendChild(e);
   }
