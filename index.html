@@ -109,8 +109,8 @@ position:relative;
 /* LIVRO */
 
 .album-page{
-width:min(92vw,1100px);
-height:min(82vh,760px);
+width:min(78vw,420px);
+height:min(70vh,680px);
 
 background:
 linear-gradient(rgba(1,13,31,.88),rgba(1,13,31,.92)),
@@ -449,33 +449,51 @@ width:130px;
 
 @media(max-width:600px){
 
+.alb-body{
+padding:10px;
+}
+
+.album-page{
+width:92vw;
+height:72vh;
+border-radius:18px;
+}
+
 .sticker-grid{
 grid-template-columns:
-repeat(2,110px);
+repeat(2,95px);
 
-gap:14px;
-padding:14px;
+gap:12px;
+padding:12px;
 }
 
 .slot{
-width:110px;
-border-radius:12px;
+width:95px;
+border-radius:10px;
 }
 
 .slot-name-lbl{
-font-size:.5rem;
+font-size:.46rem;
+padding:5px 4px;
 }
 
 .alb-cover-img{
-width:min(260px,84vw);
+width:min(210px,72vw);
 }
 
 .page-hdr{
-padding:14px;
+padding:12px;
 }
 
 .page-hdr-title{
-font-size:.9rem;
+font-size:.82rem;
+}
+
+#nav-prev,
+#nav-next{
+width:42px;
+height:42px;
+font-size:1rem;
 }
 }
 </style>
