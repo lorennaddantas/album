@@ -182,32 +182,32 @@ flex:1;
 display:grid;
 
 grid-template-columns:
-repeat(auto-fit,minmax(170px,1fr));
+repeat(auto-fit,minmax(120px,140px));
 
-gap:24px;
+justify-content:center;
+
+gap:22px;
 
 padding:
-20px
-32px
+24px
+28px
 34px;
 
 overflow-y:auto;
 
 align-content:start;
-justify-items:center;
 }
 
-/* SLOT */
+/* FIGURINHA */
 
 .slot{
-width:100%;
-max-width:190px;
+width:140px;
 
 aspect-ratio:5/7;
 
-border-radius:16px;
+border-radius:14px;
 
-border:2px dashed rgba(255,255,255,.16);
+border:2px dashed rgba(255,255,255,.14);
 
 position:relative;
 
@@ -224,11 +224,8 @@ rgba(255,255,255,.03),
 rgba(0,0,0,.18)
 );
 
-transition:.25s;
-}
-
-.slot:hover{
-transform:translateY(-4px);
+transition:.22s;
+flex-shrink:0;
 }
 
 .slot.placed{
@@ -434,28 +431,39 @@ width:min(320px,82vw);
 }
 }
 
-@media(max-width:600px){
-
-.album-page{
-height:80vh;
-border-radius:18px;
-}
+@media(max-width:900px){
 
 .sticker-grid{
 grid-template-columns:
-repeat(2,1fr);
+repeat(2,130px);
+
+justify-content:center;
+
+gap:18px;
+}
+
+.slot{
+width:130px;
+}
+}
+
+@media(max-width:600px){
+
+.sticker-grid{
+grid-template-columns:
+repeat(2,110px);
 
 gap:14px;
 padding:14px;
 }
 
 .slot{
-max-width:135px;
+width:110px;
 border-radius:12px;
 }
 
 .slot-name-lbl{
-font-size:.52rem;
+font-size:.5rem;
 }
 
 .alb-cover-img{
