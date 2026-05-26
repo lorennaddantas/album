@@ -12,21 +12,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden;transition:opacity .3s,transform .3s}
 .screen.hidden{opacity:0;pointer-events:none;transform:scale(.97)}
 
-/* ── HOME ── */
+/* HOME */
 #home{background:linear-gradient(160deg,#021033 0%,#001a08 50%,#1a1200 100%)}
 .home-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:14px 14px 70px;gap:12px}
-
 .cover-wrap{width:min(190px,50vw);aspect-ratio:3/4;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 12px 50px rgba(0,0,0,.7),0 0 40px rgba(255,215,0,.15);flex-shrink:0}
 .cover-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%;max-width:400px}
 .stat-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:9px 5px;text-align:center}
 .stat-val{font-family:'Bebas Neue',cursive;font-size:1.35rem;color:#FFDF00;line-height:1}
 .stat-label{font-size:.54rem;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:1.5px;margin-top:2px}
-
 .pack-area{width:100%;max-width:400px;background:rgba(255,255,255,.04);border:1px solid rgba(255,215,0,.1);border-radius:16px;padding:16px;text-align:center}
 .pack-vis-wrap{width:76px;height:107px;margin:0 auto 12px;position:relative}
-.pack-vis{width:100%;height:100%;border-radius:10px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:#111}
+.pack-vis{width:100%;height:100%;border-radius:10px;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center}
 .pack-vis img{width:100%;height:100%;object-fit:cover;display:block}
 .pack-vis.ready{box-shadow:0 6px 28px rgba(0,156,59,.6);animation:pp 2s ease-in-out infinite}
 .pack-badge{width:22px;height:22px;border-radius:50%;background:#FF3B30;color:#fff;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #021033;position:absolute;top:-8px;right:-8px;z-index:10}
@@ -36,7 +33,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .timer-disp{font-family:'Bebas Neue',cursive;font-size:2rem;letter-spacing:4px;line-height:1}
 .prog-wrap{width:100%;height:3px;background:rgba(255,255,255,.07);border-radius:2px;margin:9px 0;overflow:hidden}
 .prog-bar{height:100%;background:linear-gradient(90deg,#009c3b,#FFDF00);border-radius:2px;transition:width .5s}
-
 .btn{cursor:pointer;border:none;outline:none;font-family:'Nunito',sans-serif;font-weight:900;border-radius:10px;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:5px}
 .btn:active{transform:scale(.95)}
 .btn-gold{background:linear-gradient(135deg,#FFDF00,#FF9500);color:#000;padding:12px 22px;font-size:.86rem;box-shadow:0 4px 18px rgba(255,215,0,.28)}
@@ -44,7 +40,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .btn-ghost{background:rgba(255,255,255,.07);color:#fff;padding:9px 14px;font-size:.76rem;border:1px solid rgba(255,255,255,.1)}
 .btn-green{background:linear-gradient(135deg,#009c3b,#006d2a);color:#fff;padding:12px 22px;font-size:.86rem;box-shadow:0 4px 16px rgba(0,156,59,.25)}
 
-/* ── OPENING ── */
+/* OPENING */
 #opening{background:radial-gradient(ellipse at center,#001a08 0%,#021033 70%);align-items:center;justify-content:center}
 .open-inner{display:flex;flex-direction:column;align-items:center;width:100%;padding:18px;gap:12px}
 .pack-env{width:130px;height:182px;border-radius:12px;cursor:pointer;position:relative;overflow:hidden;transition:opacity .5s,transform .5s;animation:pf 3s ease-in-out infinite;user-select:none;box-shadow:0 10px 40px rgba(0,156,59,.45)}
@@ -58,8 +54,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .stickers-reveal{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:360px}
 .sr-wrap{animation:siu .5s both ease-out}
 @keyframes siu{from{opacity:0;transform:translateY(24px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
-
-/* sticker card flip */
 .sc{width:74px;height:104px;border-radius:8px;position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
 .sc.flipped{transform:rotateY(180deg)}
 .sc-f,.sc-b{position:absolute;inset:0;border-radius:8px;backface-visibility:hidden}
@@ -70,52 +64,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .sc-footer{padding:3px 4px;text-align:center;flex-shrink:0}
 .sc-name{font-size:.4rem;font-weight:900;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ── ALBUM ── */
+/* ALBUM */
 #album{background:#010d1f}
 .alb-topbar{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(0,0,0,.6);border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
 .alb-title-txt{font-family:'Bebas Neue',cursive;font-size:.84rem;letter-spacing:3px}
 .alb-body{flex:1;overflow:hidden;display:flex;flex-direction:column;padding:7px;min-height:0}
-
-/* page */
 .album-page{flex:1;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-height:0;border:1px solid rgba(255,255,255,.05)}
 .page-hdr{padding:5px 10px 4px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .page-hdr-title{font-family:'Bebas Neue',cursive;font-size:.78rem;letter-spacing:2px}
-
-/* 5 cols grid - KEY FIX: no overlap */
-.sticker-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:5px;
-  padding:5px 7px 7px;
-  flex:1;
-  min-height:0;
-  align-content:center;
-}
-.slot{
-  border-radius:7px;
-  border:1.5px dashed rgba(255,255,255,.12);
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  aspect-ratio:5/7;
-  transition:all .2s;
-  min-width:0;
-  min-height:0;
-}
+.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:5px 7px 7px;flex:1;min-height:0;align-content:center}
+.slot{border-radius:7px;border:1.5px dashed rgba(255,255,255,.12);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:5/7;transition:all .2s;min-width:0;min-height:0}
 .slot.placed{border-style:solid}
 .slot-num{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:.48rem;color:#fff;z-index:2;background:rgba(0,0,0,.7)}
 .slot img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
 .slot-name-lbl{position:absolute;bottom:0;left:0;right:0;padding:2px;text-align:center;font-size:.33rem;font-weight:900;color:#fff;background:rgba(0,0,0,.72);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2}
 .slot-empty-txt{font-size:.55rem;opacity:.12;font-family:'Bebas Neue',cursive;color:#fff}
-
-/* nav */
 .alb-nav{display:flex;align-items:center;justify-content:space-between;padding:5px 12px;flex-shrink:0}
 .page-dots{display:flex;gap:4px}
 .pdot{height:6px;border-radius:3px;transition:all .3s;cursor:pointer}
-
-/* tray */
 .sticker-tray{flex-shrink:0;padding:5px 10px 10px;background:rgba(0,0,0,.7);border-top:1px solid rgba(255,255,255,.05)}
 .tray-label{font-size:.5rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.3);margin-bottom:4px}
 .tray-scroll{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px}
@@ -125,12 +91,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 .mini-s:active{cursor:grabbing;transform:scale(1.1)}
 .mini-s img{width:100%;height:100%;object-fit:cover;display:block}
 .mini-num{position:absolute;top:1px;left:1px;width:11px;height:11px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:.4rem;color:#fff;z-index:2;background:rgba(0,0,0,.8)}
-
-/* drag ghost */
 #drag-ghost{position:fixed;pointer-events:none;z-index:9999;border-radius:6px;border:2px solid;display:none;width:42px;height:59px;overflow:hidden;background:#111;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 #drag-ghost img{width:100%;height:100%;object-fit:cover;display:block}
-
-/* cover page inside album */
 .alb-cover-inner{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:12px}
 .alb-cover-img{width:min(130px,36vw);aspect-ratio:3/4;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.6);border:2px solid rgba(255,215,0,.25)}
 .alb-cover-img img{width:100%;height:100%;object-fit:cover;display:block}
@@ -142,21 +104,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 <!-- HOME -->
 <div id="home" class="screen">
 <div class="home-scroll">
-
   <div class="cover-wrap">
-    <img src="https://raw.githubusercontent.com/lorennaddantas/album/main/image/Capa%20do%20%C3%81lbum.png" alt="Capa do Álbum" crossorigin="anonymous"/>
+    <img src="image/Capa do Álbum.png" alt="Capa"/>
   </div>
-
   <div class="stats-row">
     <div class="stat-card"><div class="stat-val" id="stat-col">0/25</div><div class="stat-label">COLETADAS</div></div>
     <div class="stat-card"><div class="stat-val" id="stat-placed">0/25</div><div class="stat-label">COLADAS</div></div>
     <div class="stat-card"><div class="stat-val" id="stat-packs">0/5</div><div class="stat-label">PACKS</div></div>
   </div>
-
   <div class="pack-area">
     <div class="pack-vis-wrap">
       <div class="pack-vis" id="pvis">
-        <img src="https://raw.githubusercontent.com/lorennaddantas/album/main/image/CAPA%20DO%20PACK%20DAS%20FIGURINHAS.png" alt="Pack" crossorigin="anonymous"/>
+        <img src="image/CAPA DO PACK DAS FIGURINHAS.png" alt="Pack"/>
       </div>
       <div class="pack-badge" id="pbadge" style="display:none">0</div>
     </div>
@@ -167,7 +126,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
     <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
     <button class="btn btn-gold" id="claim-btn" style="width:100%;margin-top:8px" disabled>AGUARDE OS PACKS</button>
   </div>
-
   <button class="btn btn-green" id="go-album" style="width:100%;max-width:400px">📖 VER ÁLBUM</button>
 </div>
 </div>
@@ -207,10 +165,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 (function(){
 'use strict';
 
-const BASE = 'https://raw.githubusercontent.com/lorennaddantas/album/main/image/';
+// Caminho relativo — funciona no GitHub Pages
+const BASE = 'image/';
 
-// Mapeamento figurinha → arquivo no GitHub
-// Ordem: baseado nas imagens que você enviou em ordem alfabética pelos nomes
 const STICKERS = [
   {id:1,  name:'Amanda',            file:'a.png',  color:'#009c3b', accent:'#FFDF00'},
   {id:2,  name:'Amanda e Lorenna',  file:'b.png',  color:'#009c3b', accent:'#FFDF00'},
@@ -239,20 +196,19 @@ const STICKERS = [
   {id:25, name:'Fig. 25',           file:'27.png', color:'#009c3b', accent:'#FFDF00'},
 ];
 
-function imgUrl(s){ return BASE + encodeURIComponent(s.file); }
+function imgUrl(s){ return BASE + s.file; }
 
 const PACKS = [[1,2,3,4,5],[6,7,8,9,10],[11,12,13,14,15],[16,17,18,19,20],[21,22,23,24,25]];
 const TOTAL_PACKS = 5, INTERVAL_MS = 60*60*1000;
 
 const PAGES = [
-  {label:'SESSÃO 1 • 1-5',    ids:[1,2,3,4,5],     bg:'linear-gradient(160deg,#001a08,#010d1f)', border:'#009c3b'},
-  {label:'SESSÃO 2 • 6-10',   ids:[6,7,8,9,10],    bg:'linear-gradient(160deg,#1a1200,#010d1f)', border:'#DAA520'},
-  {label:'SESSÃO 3 • 11-15',  ids:[11,12,13,14,15],bg:'linear-gradient(160deg,#0a0018,#010d1f)', border:'#7B2D8B'},
-  {label:'SESSÃO 4 • 16-20',  ids:[16,17,18,19,20],bg:'linear-gradient(160deg,#00081a,#010d1f)', border:'#003087'},
-  {label:'SESSÃO 5 • 21-25',  ids:[21,22,23,24,25],bg:'linear-gradient(160deg,#1a0800,#010d1f)', border:'#8B3A1A'},
+  {label:'SESSÃO 1 • 1-5',   ids:[1,2,3,4,5],     bg:'linear-gradient(160deg,#001a08,#010d1f)', border:'#009c3b'},
+  {label:'SESSÃO 2 • 6-10',  ids:[6,7,8,9,10],    bg:'linear-gradient(160deg,#1a1200,#010d1f)', border:'#DAA520'},
+  {label:'SESSÃO 3 • 11-15', ids:[11,12,13,14,15],bg:'linear-gradient(160deg,#0a0018,#010d1f)', border:'#7B2D8B'},
+  {label:'SESSÃO 4 • 16-20', ids:[16,17,18,19,20],bg:'linear-gradient(160deg,#00081a,#010d1f)', border:'#003087'},
+  {label:'SESSÃO 5 • 21-25', ids:[21,22,23,24,25],bg:'linear-gradient(160deg,#1a0800,#010d1f)', border:'#8B3A1A'},
 ];
 
-// STATE
 let state = {openedPacks:[],collected:[],placed:{},lastClaim:null,pending:3};
 function save(){ try{ localStorage.setItem('owc26d', JSON.stringify(state)); }catch(e){} }
 function load(){ try{ const r=localStorage.getItem('owc26d'); if(r) state=JSON.parse(r); }catch(e){} }
@@ -261,7 +217,7 @@ function $(id){ return document.getElementById(id); }
 function sById(id){ return STICKERS[id-1]; }
 function fmt(ms){
   if(ms<=0) return '00:00:00';
-  const s=Math.floor(ms/1000), h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+  const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
   return [h,m,sec].map(v=>String(v).padStart(2,'0')).join(':');
 }
 function showScreen(n){ document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden')); $(n).classList.remove('hidden'); }
@@ -276,22 +232,19 @@ function getStatus(){
   return {pending:pend, msLeft:INTERVAL_MS-ms, progress:ms/INTERVAL_MS};
 }
 
-// HOME
 function renderHome(){
   const {pending,msLeft,progress}=getStatus();
-  const col=state.collected.length, pl=Object.keys(state.placed).length, op=state.openedPacks.length;
-  $('stat-col').textContent=col+'/25';
-  $('stat-placed').textContent=pl+'/25';
-  $('stat-packs').textContent=op+'/'+TOTAL_PACKS;
+  $('stat-col').textContent=state.collected.length+'/25';
+  $('stat-placed').textContent=Object.keys(state.placed).length+'/25';
+  $('stat-packs').textContent=state.openedPacks.length+'/'+TOTAL_PACKS;
   $('prog').style.width=(progress*100)+'%';
-
   const pv=$('pvis'), pb=$('pbadge'), cb=$('claim-btn');
   if(pending>0){
     pv.className='pack-vis ready';
     pb.textContent=pending; pb.style.display='flex';
     $('timer-sec').innerHTML=`<div class="pack-ready-lbl">${pending} PACK${pending>1?'S':''} DISPONÍVE${pending>1?'IS':'L'}!</div>`;
     cb.disabled=false; cb.textContent='RESGATAR '+pending+' PACK'+(pending>1?'S':'');
-  } else if(op>=TOTAL_PACKS){
+  } else if(state.openedPacks.length>=TOTAL_PACKS){
     pv.className='pack-vis'; pb.style.display='none';
     $('timer-sec').innerHTML=`<div class="pack-ready-lbl">ÁLBUM COMPLETO! 🏆</div>`;
     cb.disabled=true; cb.textContent='TODOS OS PACKS ABERTOS';
@@ -330,15 +283,11 @@ function renderOpenPack(){
   $('open-prog').innerHTML=opPacks.map((_,i)=>`<div class="open-prog-dot" style="background:${i<opIdx?'#FFDF00':i===opIdx?'rgba(255,223,0,.45)':'rgba(255,255,255,.1)'}"></div>`).join('');
   $('open-lbl').textContent=`PACK ${opIdx+1} DE ${opPacks.length}`;
   const oc=$('open-content'); oc.innerHTML='';
-
   const env=document.createElement('div'); env.className='pack-env'; env.id='pack-env';
-  const im=document.createElement('img');
-  im.src=BASE+'CAPA%20DO%20PACK%20DAS%20FIGURINHAS.png';
-  im.alt='Pack'; im.crossOrigin='anonymous';
+  const im=document.createElement('img'); im.src='image/CAPA DO PACK DAS FIGURINHAS.png'; im.alt='Pack';
   env.appendChild(im);
   const tap=document.createElement('div'); tap.className='pack-env-tap'; tap.textContent='TOQUE PARA ABRIR';
-  env.appendChild(tap);
-  oc.appendChild(env);
+  env.appendChild(tap); oc.appendChild(env);
   env.addEventListener('click', doOpen, {once:true});
 }
 
@@ -356,11 +305,9 @@ function doOpen(){
 function renderReveal(ids){
   const isLast=opIdx===opPacks.length-1;
   const oc=$('open-content'); oc.innerHTML='';
-
   const ttl=document.createElement('div');
   ttl.style.cssText='font-family:Bebas Neue,cursive;font-size:.95rem;letter-spacing:3px;color:#FFDF00';
   ttl.textContent='SUAS FIGURINHAS!'; oc.appendChild(ttl);
-
   const rev=document.createElement('div'); rev.className='stickers-reveal'; oc.appendChild(rev);
   ids.forEach((id,i)=>{
     const s=sById(id);
@@ -368,13 +315,12 @@ function renderReveal(ids){
     const card=document.createElement('div'); card.className='sc'; card.id='rsc-'+id;
     card.innerHTML=`<div class="sc-f">✦</div>
       <div class="sc-b" style="border-color:${s.color}">
-        <div class="sc-img"><img src="${imgUrl(s)}" alt="${s.name}" crossorigin="anonymous"/></div>
+        <div class="sc-img"><img src="${imgUrl(s)}" alt="${s.name}"/></div>
         <div class="sc-footer" style="background:${s.color}44"><div class="sc-name" style="color:${s.accent}">#${id} ${s.name}</div></div>
       </div>`;
     w.appendChild(card); rev.appendChild(w);
     setTimeout(()=>{ const el=document.getElementById('rsc-'+id); if(el) el.classList.add('flipped'); }, i*170+460);
   });
-
   const nbtn=document.createElement('button'); nbtn.className='btn btn-gold';
   nbtn.textContent=isLast?'📖 VER ÁLBUM':'PRÓXIMO PACK →';
   nbtn.addEventListener('click',()=>{
@@ -411,20 +357,18 @@ function renderPage(){
   const body=$('alb-body'); body.innerHTML='';
   $('nav-prev').style.opacity=albPage===0?'.3':'1'; $('nav-prev').disabled=albPage===0;
   $('nav-next').style.opacity=albPage===TOTAL_ALB-1?'.3':'1'; $('nav-next').disabled=albPage===TOTAL_ALB-1;
-
   if(albPage===0){
     $('alb-title').textContent='CAPA'; $('alb-title').style.color='#FFDF00';
     const pg=document.createElement('div'); pg.className='album-page';
     pg.style.background='linear-gradient(160deg,#010d1f,#001a0a)';
     const placed=Object.keys(state.placed).length;
     pg.innerHTML=`<div class="alb-cover-inner">
-      <div class="alb-cover-img"><img src="${BASE}Capa%20do%20%C3%81lbum.png" alt="Capa" crossorigin="anonymous"/></div>
+      <div class="alb-cover-img"><img src="image/Capa do Álbum.png" alt="Capa"/></div>
       <div style="font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:4px;color:#FFDF00;text-align:center;line-height:1.2">OUR WORLD CUP<br><span style='font-size:1.5rem'>2026</span></div>
       <div style="padding:5px 16px;border-radius:14px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.18);font-family:'Bebas Neue',cursive;font-size:.78rem;color:#FFDF00;letter-spacing:2px">${placed}/25 COLADAS</div>
     </div>`;
     body.appendChild(pg); return;
   }
-
   const pg=PAGES[albPage-1];
   $('alb-title').textContent=pg.label; $('alb-title').style.color=pg.border;
   const page=document.createElement('div'); page.className='album-page';
@@ -445,20 +389,13 @@ function makeSlot(id){
   slot.dataset.slotId=id;
   slot.style.borderColor=isP?s.color:'rgba(255,255,255,.1)';
   if(isP) slot.style.boxShadow=`0 0 8px ${s.color}55`;
-
   const num=document.createElement('div'); num.className='slot-num';
-  num.style.background=isP?s.color:'rgba(0,0,0,.7)';
-  num.textContent=id; slot.appendChild(num);
-
+  num.style.background=isP?s.color:'rgba(0,0,0,.7)'; num.textContent=id; slot.appendChild(num);
   if(isP){
-    const im=document.createElement('img');
-    im.src=imgUrl(s); im.alt=s.name; im.crossOrigin='anonymous';
-    slot.appendChild(im);
-    const lbl=document.createElement('div'); lbl.className='slot-name-lbl'; lbl.textContent=s.name;
-    slot.appendChild(lbl);
+    const im=document.createElement('img'); im.src=imgUrl(s); im.alt=s.name; slot.appendChild(im);
+    const lbl=document.createElement('div'); lbl.className='slot-name-lbl'; lbl.textContent=s.name; slot.appendChild(lbl);
   } else {
-    const e=document.createElement('div'); e.className='slot-empty-txt'; e.textContent=id;
-    slot.appendChild(e);
+    const e=document.createElement('div'); e.className='slot-empty-txt'; e.textContent=id; slot.appendChild(e);
   }
   return slot;
 }
@@ -470,12 +407,9 @@ function renderTray(){
   tray.style.display='block'; scroll.innerHTML='';
   unplaced.forEach(id=>{
     const s=sById(id);
-    const m=document.createElement('div'); m.className='mini-s'; m.dataset.miniId=id;
-    m.style.borderColor=s.color;
-    const im=document.createElement('img'); im.src=imgUrl(s); im.alt=s.name; im.crossOrigin='anonymous';
-    m.appendChild(im);
-    const mn=document.createElement('div'); mn.className='mini-num'; mn.style.background=s.color; mn.textContent=id;
-    m.appendChild(mn);
+    const m=document.createElement('div'); m.className='mini-s'; m.dataset.miniId=id; m.style.borderColor=s.color;
+    const im=document.createElement('img'); im.src=imgUrl(s); im.alt=s.name; m.appendChild(im);
+    const mn=document.createElement('div'); mn.className='mini-num'; mn.style.background=s.color; mn.textContent=id; m.appendChild(mn);
     setupDrag(m,id,s); scroll.appendChild(m);
   });
 }
@@ -483,10 +417,7 @@ function renderTray(){
 const ghost=$('drag-ghost'), ghostImg=$('ghost-img');
 let dragging=null;
 function setupDrag(el,id,s){
-  function startD(cx,cy){
-    dragging=id; ghost.style.display='block'; ghost.style.borderColor=s.color;
-    ghostImg.src=imgUrl(s); moveG(cx,cy);
-  }
+  function startD(cx,cy){ dragging=id; ghost.style.display='block'; ghost.style.borderColor=s.color; ghostImg.src=imgUrl(s); moveG(cx,cy); }
   function moveG(cx,cy){ ghost.style.left=(cx-21)+'px'; ghost.style.top=(cy-29)+'px'; }
   function endD(cx,cy){
     ghost.style.display='none'; if(dragging===null) return;
