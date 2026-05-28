@@ -449,14 +449,38 @@ function getPackIds(packIndex){
 function getStatus(){
   const now = Date.now();
   const rem = TOTAL_PACKS - state.openedPacks.length;
-  if(rem <= 0) return {pending:0, msLeft:0, progress:1};
-  if(!state.lastClaim) return {pending: Math.max(state.pending,1), msLeft:INTERVAL_MS, progress:0};
-  const el = now - state.lastClaim;
-  const batches = Math.floor(el / INTERVAL_MS);
-  // ganha 1 pack por hora
-  const pend = Math.min(state.pending + Math.min(batches, rem), rem);
-  const ms = el % INTERVAL_MS;
-  return {pending:pend, msLeft:INTERVAL_MS - ms, progress: ms / INTERVAL_MS};
+
+  // acabou todos os packs
+  if(rem <= 0){
+    return {pending:0, msLeft:0, progress:1};
+  }
+
+  // primeiro pack disponível imediatamente
+  if(!state.lastClaim){
+    return {
+      pending: state.pending > 0 ? 1 : 0,
+      msLeft: INTERVAL_MS,
+      progress: 0
+    };
+  }
+
+  const elapsed = now - state.lastClaim;
+
+  // ainda contando
+  if(elapsed < INTERVAL_MS){
+    return {
+      pending: 0,
+      msLeft: INTERVAL_MS - elapsed,
+      progress: elapsed / INTERVAL_MS
+    };
+  }
+
+  // terminou a contagem → libera APENAS 1 pack
+  return {
+    pending: 1,
+    msLeft: 0,
+    progress: 1
+  };
 }
 
 function renderHome(){
@@ -563,7 +587,8 @@ function renderReveal(ids){
   nbtn.addEventListener('click',()=>{
     if(isLast){
       // SÓ aqui inicia a contagem do próximo pack
-      state.lastClaim = Date.now();
+     state.lastClaim = Date.now();
+     state.pending = 1;
       save();
       showScreen('home'); renderHome(); startTimer();
     } else {
