@@ -81,7 +81,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 #album{
   background:
     linear-gradient(rgba(1,13,31,.92),rgba(1,13,31,.96)),
-    url('image/Capa do Álbum.png') center/cover no-repeat fixed;
+    url('image/capa do álbum.png') center/cover no-repeat fixed;
 }
 .alb-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(0,0,0,.6);border-bottom:1px solid rgba(255,255,255,.06);backdrop-filter:blur(10px);flex-shrink:0;z-index:20}
 .alb-title-txt{font-family:'Bebas Neue',cursive;font-size:.95rem;letter-spacing:4px;color:#FFDF00}
@@ -103,7 +103,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
   height:min(calc(100dvh - 160px),640px);
   background:
     linear-gradient(rgba(1,13,31,.84),rgba(1,13,31,.90)),
-    url('image/Capa do Álbum.png') center/cover no-repeat;
+    url('image/capa do álbum.png') center/cover no-repeat;
   border-radius:16px;
   border:1px solid rgba(255,255,255,.08);
   box-shadow:
@@ -294,7 +294,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
 <div id="home" class="screen">
 <div class="home-scroll">
   <div class="cover-wrap">
-    <img src="image/Capa do Álbum.png" alt="Capa"/>
+    <img src="image/capa do álbum.png" alt="Capa"/>
   </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-val" id="stat-col">0/25</div><div class="stat-label">COLETADAS</div></div>
@@ -304,7 +304,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#021033;font-family:
   <div class="pack-area">
     <div class="pack-vis-wrap">
       <div class="pack-vis" id="pvis">
-        <img src="image/CAPA DO PACK DAS FIGURINHAS.png" alt="Pack"/>
+        <img src="image/capa do pack das figurinhas.png" alt="Pack"/>
       </div>
       <div class="pack-badge" id="pbadge" style="display:none">0</div>
     </div>
@@ -402,11 +402,12 @@ const INTERVAL_MS = 60 * 60 * 1000;
 
 // --- Estado ---
 let state = {
-  openedPacks: [],   // quantos packs já foram abertos (índice sequencial)
-  collected:   [],   // IDs coletados (podem repetir — guardamos como set)
-  placed:      {},   // {id: true}
-  lastClaim:   null, // timestamp do último resgate
-  pending:     1,    // packs disponíveis no momento
+  openedPacks: [],
+  collected:   [],
+  placed:      {},
+  lastClaim:   null,
+  pending:     1,
+  sortedOrder: [], // ordem sorteada de todas as 25 figurinhas
 };
 function save(){ try{ localStorage.setItem('owc26e', JSON.stringify(state)); }catch(e){} }
 function load(){ try{ const r=localStorage.getItem('owc26e'); if(r) state=JSON.parse(r); }catch(e){} }
@@ -430,10 +431,19 @@ function shuffle(arr){
   return a;
 }
 
-// Gera 5 figurinhas aleatórias dentre as 25 para um pack
-function randomPackIds(){
-  const all = STICKERS.map(s=>s.id);
-  return shuffle(all).slice(0, PACK_SIZE);
+// Garante que exista uma ordem sorteada salva no state
+// Cada pack pega as próximas 5 dessa sequência — sem repetição
+function ensureSortedOrder(){
+  if(!state.sortedOrder || state.sortedOrder.length !== 25){
+    state.sortedOrder = shuffle(STICKERS.map(s=>s.id));
+    save();
+  }
+}
+
+function getPackIds(packIndex){
+  ensureSortedOrder();
+  const start = packIndex * PACK_SIZE;
+  return state.sortedOrder.slice(start, start + PACK_SIZE);
 }
 
 function getStatus(){
@@ -486,9 +496,9 @@ function startTimer(){
 
 $('claim-btn').addEventListener('click',()=>{
   const {pending}=getStatus(); if(pending<=0) return;
-  // Registra abertura e zera timer
+  // Zera pending e só inicia o timer APÓS abrir
   state.pending   = 0;
-  state.lastClaim = Date.now();
+  state.lastClaim = null; // timer só começa depois de abrir
   save();
   startOpening(pending);
 });
@@ -503,14 +513,16 @@ function startOpening(count){
 }
 
 function renderOpenPack(){
-  opPackIds = randomPackIds(); // sorteia 5 aleatórias
+  // índice correto: quantos packs já foram abertos + posição atual nesta sessão
+  const packIndex = state.openedPacks.length + opCurrent;
+  opPackIds = getPackIds(packIndex);
   $('open-prog').innerHTML = Array.from({length:opTotal},(_,i)=>
     `<div class="open-prog-dot" style="background:${i<opCurrent?'#FFDF00':i===opCurrent?'rgba(255,223,0,.45)':'rgba(255,255,255,.1)'}"></div>`
   ).join('');
   $('open-lbl').textContent = `PACK ${opCurrent+1} DE ${opTotal}`;
   const oc=$('open-content'); oc.innerHTML='';
   const env=document.createElement('div'); env.className='pack-env'; env.id='pack-env';
-  const im=document.createElement('img'); im.src='image/CAPA DO PACK DAS FIGURINHAS.png'; im.alt='Pack';
+  const im=document.createElement('img'); im.src='image/capa do pack das figurinhas.png'; im.alt='Pack';
   env.appendChild(im);
   const tap=document.createElement('div'); tap.className='pack-env-tap'; tap.textContent='TOQUE PARA ABRIR';
   env.appendChild(tap); oc.appendChild(env);
@@ -520,9 +532,9 @@ function renderOpenPack(){
 function doOpen(){
   const env=$('pack-env'); if(env) env.classList.add('opening');
   const ids = opPackIds;
-  // Registra pack aberto e figurinhas coletadas
   state.openedPacks.push(state.openedPacks.length);
-  ids.forEach(id=>{ if(!state.collected.includes(id)) state.collected.push(id); });
+  // sem repetição garantida pela sortedOrder — adiciona todos diretamente
+  ids.forEach(id=>{ state.collected.push(id); });
   save();
   setTimeout(()=>renderReveal(ids), 520);
 }
@@ -549,8 +561,14 @@ function renderReveal(ids){
   const nbtn=document.createElement('button'); nbtn.className='btn btn-gold';
   nbtn.textContent = isLast ? '📖 VER ÁLBUM' : 'PRÓXIMO PACK →';
   nbtn.addEventListener('click',()=>{
-    if(isLast){ showScreen('home'); renderHome(); startTimer(); }
-    else{ opCurrent++; renderOpenPack(); }
+    if(isLast){
+      // SÓ aqui inicia a contagem do próximo pack
+      state.lastClaim = Date.now();
+      save();
+      showScreen('home'); renderHome(); startTimer();
+    } else {
+      opCurrent++; renderOpenPack();
+    }
   });
   oc.appendChild(nbtn);
   $('open-prog').innerHTML = Array.from({length:opTotal},(_,i)=>
@@ -593,7 +611,7 @@ function renderPage(){
     pg.innerHTML=`
       <div class="book-spine"></div>
       <div class="alb-cover-inner">
-        <div class="alb-cover-img"><img src="image/Capa do Álbum.png" alt="Capa"/></div>
+        <div class="alb-cover-img"><img src="image/capa do álbum.png" alt="Capa"/></div>
       </div>
       <div style="padding:10px 16px;text-align:center;flex-shrink:0;border-top:1px solid rgba(255,255,255,.05)">
         <div class="cover-progress">${placed}/25 COLADAS</div>
